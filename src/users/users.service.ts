@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './entities/user.entity';
@@ -25,7 +26,13 @@ export class UsersService {
       );
     }
 
-    const user = this.userRepository.create({ email, name, password });
+    const hashedPassword = await hash(password, 8);
+
+    const user = this.userRepository.create({
+      email,
+      name,
+      password: hashedPassword,
+    });
 
     return await this.userRepository.save(user);
   }
