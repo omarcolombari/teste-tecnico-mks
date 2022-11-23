@@ -1,4 +1,11 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryColumn,
+} from 'typeorm';
+import { v4 } from 'uuid';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -16,4 +23,9 @@ export class UserEntity {
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
+
+  @BeforeInsert()
+  generateId() {
+    this.id = v4();
+  }
 }

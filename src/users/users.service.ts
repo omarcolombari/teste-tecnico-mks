@@ -13,7 +13,7 @@ export class UsersService {
   ) {}
 
   async create({ email, name, password }: CreateUserDto): Promise<UserEntity> {
-    if (
+    /* if (
       this.userRepository.findOne({
         where: {
           email,
@@ -24,7 +24,7 @@ export class UsersService {
         { status: HttpStatus.CONFLICT, error: 'User already exist' },
         HttpStatus.CONFLICT,
       );
-    }
+    }*/
 
     const hashedPassword = await hash(password, 8);
 

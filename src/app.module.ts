@@ -14,17 +14,13 @@ import 'dotenv/config';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      synchronize: false,
+      synchronize: true,
       logging: true,
       ssl:
         process.env.NODE_ENV === 'production'
           ? { rejectUnauthorized: false }
           : false,
-      entities: [
-        process.env.NODE_ENV === 'production'
-          ? __dirname + '/**/*.entity.js'
-          : __dirname + '/**/*.entity.ts',
-      ],
+      entities: [__dirname + '/**/*.entity{.js,.ts}'],
     }),
     UsersModule,
   ],
