@@ -25,7 +25,7 @@ export class UserEntity {
   createdAt: string;
 
   @BeforeInsert()
-  generateId() {
+  private generateId() {
     this.id = v4();
   }
 }
