@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
 import 'dotenv/config';
 
 @Module({
@@ -23,6 +24,7 @@ import 'dotenv/config';
           : __dirname + '/**/*.entity.ts',
       ],
     }),
+    UsersModule,
   ],
   controllers: [],
   providers: [],
