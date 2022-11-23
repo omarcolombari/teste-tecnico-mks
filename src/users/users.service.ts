@@ -36,4 +36,12 @@ export class UsersService {
 
     return await this.userRepository.save(user);
   }
+
+  async findByEmail(email: string): Promise<UserEntity> {
+    return await this.userRepository.findOne({
+      where: {
+        email,
+      },
+    });
+  }
 }
