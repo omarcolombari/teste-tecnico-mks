@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { UsersModule } from './users/users.module';
+import { MoviesModule } from './movies/movies.module';
 import 'dotenv/config';
 
 @Module({
@@ -27,6 +28,7 @@ import 'dotenv/config';
     }),
     UsersModule,
     AuthModule,
+    MoviesModule,
   ],
   controllers: [],
   providers: [
