@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
@@ -6,7 +7,10 @@ import { MovieEntity } from './entities/movie.entity';
 
 @Injectable()
 export class MoviesService {
-  constructor(private readonly movieRepository: Repository<MovieEntity>) {}
+  constructor(
+    @InjectRepository(MovieEntity)
+    private readonly movieRepository: Repository<MovieEntity>,
+  ) {}
   async create(createMovieDto: CreateMovieDto): Promise<MovieEntity> {
     const movie = this.movieRepository.create(createMovieDto);
     return await this.movieRepository.save(movie);
