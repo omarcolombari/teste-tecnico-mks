@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
@@ -16,27 +19,31 @@ export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
   @Post()
-  create(@Body() createMovieDto: CreateMovieDto) {
-    return this.moviesService.create(createMovieDto);
+  async create(@Body() createMovieDto: CreateMovieDto) {
+    return await this.moviesService.create(createMovieDto);
   }
 
   @Get()
-  findAll() {
-    return this.moviesService.findAll();
+  async findAll() {
+    return await this.moviesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.moviesService.findOne(id);
+  async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
+    return await this.moviesService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
-    return this.moviesService.update(id, updateMovieDto);
+  async update(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() updateMovieDto: UpdateMovieDto,
+  ) {
+    return await this.moviesService.update(id, updateMovieDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.moviesService.remove(id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id', new ParseUUIDPipe()) id: string) {
+    await this.moviesService.remove(id);
   }
 }

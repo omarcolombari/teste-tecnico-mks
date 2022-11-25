@@ -21,11 +21,11 @@ export class MoviesService {
   }
 
   async findOne(id: string): Promise<MovieEntity> {
-    return this.movieRepository.findOne({
-      where: {
-        id,
-      },
-    });
+    const movie = await this.movieRepository.findOne({ where: { id } });
+    if (!movie) {
+      throw new NotFoundException('Movie not found');
+    }
+    return movie;
   }
 
   async update(
@@ -34,7 +34,7 @@ export class MoviesService {
   ): Promise<MovieEntity> {
     const movie = await this.movieRepository.findOne({ where: { id } });
     if (!movie) {
-      throw new NotFoundException();
+      throw new NotFoundException('Movie not found');
     }
 
     this.movieRepository.merge(movie, updateMovieDto);
@@ -44,9 +44,9 @@ export class MoviesService {
   async remove(id: string) {
     const movie = await this.movieRepository.findOne({ where: { id } });
     if (!movie) {
-      throw new NotFoundException();
+      throw new NotFoundException('Movie not found');
     }
 
-    await this.movieRepository.softDelete({ id });
+    await this.movieRepository.delete({ id });
   }
 }

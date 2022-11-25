@@ -2,6 +2,7 @@ import {
   BeforeInsert,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryColumn,
   UpdateDateColumn,
@@ -25,14 +26,17 @@ export class MovieEntity {
   @Column()
   synopsis: string;
 
+  @Column()
+  genres: string;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: string;
 
-  @Column()
-  genres: string;
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: string;
 
   @BeforeInsert()
   private generateId() {
