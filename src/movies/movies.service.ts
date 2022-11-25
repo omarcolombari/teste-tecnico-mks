@@ -38,10 +38,21 @@ export class MoviesService {
   }
 
   async findOne(id: string): Promise<MovieEntity> {
+    const cacheKey = `movie:${id}`;
+    const cachedMovie = await this.cacheManager.get<string>(cacheKey);
+
+    if (cachedMovie) {
+      return JSON.parse(cachedMovie);
+    }
+
     const movie = await this.movieRepository.findOne({ where: { id } });
+
     if (!movie) {
       throw new NotFoundException('Movie not found');
     }
+
+    await this.cacheManager.set(cacheKey, JSON.stringify(movie));
+
     return movie;
   }
 
