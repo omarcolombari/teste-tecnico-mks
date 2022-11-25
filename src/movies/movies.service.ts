@@ -1,15 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { MovieEntity } from './entities/movie.entity';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class MoviesService {
   constructor(
     @InjectRepository(MovieEntity)
     private readonly movieRepository: Repository<MovieEntity>,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
   async create(createMovieDto: CreateMovieDto): Promise<MovieEntity> {
     const movie = this.movieRepository.create(createMovieDto);
@@ -17,7 +24,17 @@ export class MoviesService {
   }
 
   async findAll(): Promise<MovieEntity[]> {
-    return await this.movieRepository.find();
+    const cacheKey = 'movies:all';
+    const cachedMovies = await this.cacheManager.get<string>(cacheKey);
+
+    if (cachedMovies) {
+      return JSON.parse(cachedMovies);
+    }
+
+    const movies = await this.movieRepository.find();
+    await this.cacheManager.set(cacheKey, JSON.stringify(movies));
+
+    return movies;
   }
 
   async findOne(id: string): Promise<MovieEntity> {
