@@ -7,25 +7,12 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { UsersModule } from './users/users.module';
 import { MoviesModule } from './movies/movies.module';
 import * as redisStore from 'cache-manager-redis-store';
+import dataSource from 'src/db/data-source';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'db',
-      port: 5432,
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
-      synchronize: true,
-      logging: true,
-      ssl:
-        process.env.NODE_ENV === 'production'
-          ? { rejectUnauthorized: false }
-          : false,
-      entities: [__dirname + '/**/*.entity{.js,.ts}'],
-    }),
+    TypeOrmModule.forRoot(dataSource.options),
     CacheModule.register({
       isGlobal: true,
       store: redisStore as any,
