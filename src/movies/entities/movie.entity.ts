@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'movies' })
 export class MovieEntity {
   @PrimaryColumn('uuid')
   id: string;
@@ -28,10 +28,10 @@ export class MovieEntity {
   @Column()
   genres: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.movies)
+  @ManyToOne(() => UserEntity, (user) => user.movies, { eager: true })
   user: UserEntity;
 
-  @Column({ name: 'user_id' })
+  @Column()
   userId: string;
 
   @CreateDateColumn({ name: 'created_at' })

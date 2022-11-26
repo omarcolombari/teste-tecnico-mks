@@ -12,7 +12,7 @@ import dataSource from 'src/db/data-source';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot(dataSource.options),
+    TypeOrmModule.forRoot({ ...dataSource.options, autoLoadEntities: true }),
     CacheModule.register({
       isGlobal: true,
       store: redisStore as any,

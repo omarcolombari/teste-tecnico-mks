@@ -6,7 +6,7 @@ export class createRelations1669483083278 implements MigrationInterface {
       'movies',
       new TableForeignKey({
         name: 'moviesFK',
-        columnNames: ['user_id'],
+        columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'CASCADE',

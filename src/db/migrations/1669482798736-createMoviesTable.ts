@@ -35,7 +35,7 @@ export class createMoviesTable1669482798736 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'user_id',
+            name: 'userId',
             type: 'uuid',
           },
           {

@@ -31,7 +31,19 @@ export class MoviesService {
       return JSON.parse(cachedMovies);
     }
 
-    const movies = await this.movieRepository.find();
+    const movies = await this.movieRepository.find({
+      select: [
+        'id',
+        'name',
+        'classification',
+        'duration',
+        'synopsis',
+        'genres',
+        'createdAt',
+        'updatedAt',
+        'user',
+      ],
+    });
     await this.cacheManager.set(cacheKey, JSON.stringify(movies));
 
     return movies;
@@ -45,7 +57,20 @@ export class MoviesService {
       return JSON.parse(cachedMovie);
     }
 
-    const movie = await this.movieRepository.findOne({ where: { id } });
+    const movie = await this.movieRepository.findOne({
+      where: { id },
+      select: [
+        'id',
+        'name',
+        'classification',
+        'duration',
+        'synopsis',
+        'genres',
+        'createdAt',
+        'updatedAt',
+        'user',
+      ],
+    });
 
     if (!movie) {
       throw new NotFoundException('Movie not found');

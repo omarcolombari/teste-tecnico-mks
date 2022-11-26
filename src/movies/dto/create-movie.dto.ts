@@ -16,6 +16,5 @@ export class CreateMovieDto {
   @IsString()
   genres: string;
 
-  @IsUUID(4)
   userId: string;
 }
