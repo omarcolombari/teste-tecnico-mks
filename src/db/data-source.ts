@@ -4,9 +4,11 @@ import 'dotenv/config';
 
 const configService = new ConfigService();
 
+const host = configService.get('IS_COMPOSE') ? 'db' : 'localhost';
+
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  host: 'db',
+  host,
   port: 5432,
   username: configService.get('POSTGRES_USER'),
   password: configService.get('POSTGRES_PASSWORD'),

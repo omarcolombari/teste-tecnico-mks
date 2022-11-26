@@ -16,6 +16,8 @@ services:
       - .:/usr/src/app
     env_file:
       - .env
+    environment:
+      - IS_COMPOSE=true
     command: npm run start:dev
     ports:
       - 3000:3000
