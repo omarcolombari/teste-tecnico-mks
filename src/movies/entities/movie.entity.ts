@@ -1,20 +1,19 @@
+import { UserEntity } from 'src/users/entities/user.entity';
 import {
-  BeforeInsert,
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   Entity,
+  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { v4 } from 'uuid';
 
 @Entity()
 export class MovieEntity {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column({ length: 127 })
+  @Column({ length: 255 })
   name: string;
 
   @Column()
@@ -29,17 +28,15 @@ export class MovieEntity {
   @Column()
   genres: string;
 
+  @ManyToOne(() => UserEntity, (user) => user.movies)
+  user: UserEntity;
+
+  @Column({ name: 'user_id' })
+  userId: string;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: string;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: string;
-
-  @BeforeInsert()
-  private generateId() {
-    this.id = v4();
-  }
 }

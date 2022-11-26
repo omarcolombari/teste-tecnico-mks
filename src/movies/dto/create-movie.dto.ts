@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class CreateMovieDto {
   @IsString()
@@ -15,4 +15,7 @@ export class CreateMovieDto {
 
   @IsString()
   genres: string;
+
+  @IsUUID(4)
+  userId: string;
 }
