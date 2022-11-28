@@ -1,6 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import fs from 'fs';
+import * as fs from 'fs';
 import 'dotenv/config';
 
 const configService = new ConfigService();
