@@ -1,13 +1,6 @@
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 
-export class CreateUserDto {
-  /**
-   * Será o nome visível a todos.
-   * @example Omar Colombari
-   */
-  @IsString()
-  name: string;
-
+export class LoginUserDto {
   /**
    * O e-mail é necessário para o login e contato.
    * @example email@email.com
@@ -20,7 +13,5 @@ export class CreateUserDto {
    * @example Abc123@
    */
   @IsString()
-  @MinLength(4)
-  @MaxLength(20)
   password: string;
 }

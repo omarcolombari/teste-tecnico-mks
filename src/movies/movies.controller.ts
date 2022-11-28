@@ -15,7 +15,10 @@ import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { AuthRequest } from 'src/auth/interfaces/AuthRequest';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiTags('movies')
+@ApiBearerAuth()
 @Controller('movies')
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
