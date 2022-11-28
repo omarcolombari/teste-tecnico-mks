@@ -9,11 +9,7 @@ export const dataSourceOptions: DataSourceOptions =
   configService.get('NODE_ENV') === 'production'
     ? {
         type: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: parseInt(configService.get('DB_PORT')),
-        username: configService.get('DB_USER'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_DATABASE'),
+        url: configService.get('POSTGRES_URL'),
         synchronize: false,
         logging: true,
         ssl: {
